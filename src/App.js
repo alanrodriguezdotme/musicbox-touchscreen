@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import './App.css'
 import Wrapper from './Wrapper'
+import Screensaver from './Screensaver'
 
 let apiUrl = 'http://musicbox/api/'
 // let apiUrl = 'http://localhost/api/'
@@ -20,7 +21,7 @@ function App() {
       url: apiUrl + 'player.php'
     }).success(data => {
       if (data) {
-        // console.log(data)
+        console.log(data)
         let { artist, title, album, duration, state, file } = data
         let newData = { artist, title, album, duration, state, file }
 
@@ -37,12 +38,14 @@ function App() {
     })
   }
 
-  return ( currentInfo ?
+  return (
     <Container>
-      <Wrapper data={ currentInfo } />      
+      { currentInfo && currentInfo.title ? 
+        <Wrapper data={ currentInfo } />
+        :
+        <Screensaver />
+      }
     </Container>
-    :
-    <div style={{ backgroundColor: 'red', width: '100px', height: '100px' }} />
   );
 }
 
@@ -55,4 +58,5 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   background: black;
+  overflow: hidden;
 `
